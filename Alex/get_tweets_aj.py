@@ -1,17 +1,23 @@
-
 import json
 import tweepy
 import time
 
-KEYWORDS = ["diablo"]
+import sys
+sys.path.append('C:\\Users\\alexl\\Documents\\GitPython')
+from twitter_pw import twitter
 
-consumer_key = 'gDKxzEeFWwTefbrvvW1HYx907'
-consumer_secret = 'TEs1kmZFDVmsVKK08VJWanYdy4YuAB2nGj7QKGVFTZMSIR3OXt'
-access_token = '3071178056-x6eFbQ4Z9ozzcsrks5FMQ0la4Hy1I1IPXRDUbGA'
-access_token_secret = 'BdmTdwXsBQJeXQRM8K5RYGjsRnzrCF1Z7Wz0iuKycAxXe'
+KEYWORDS = ["Berlin"]
+print("twitter loaded")
+def authenticate():
+    auth = tweepy.OAuthHandler(twitter['consumer_key'], twitter['consumer_secret'])
+    auth.set_access_token(twitter['access_token'], twitter['access_token_secret'])
+    api = tweepy.API(auth, wait_on_rate_limit=True)
+    user = api.me()
 
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
+    return auth, api, user
+
+auth = tweepy.OAuthHandler(twitter['consumer_key'], twitter['consumer_secret'])
+auth.set_access_token(twitter['access_token'], twitter['access_token_secret'])
 api = tweepy.API(auth, wait_on_rate_limit=True)
 user = api.me()
 
@@ -24,7 +30,9 @@ class StreamListener(tweepy.StreamListener):
         self.callback = callback
 
     def on_error(self, status_code):
-        '''stops stream when error 420 occurs'''
+        """
+        stops stream when error 420 occurs
+        """
         if status_code == 420:
             return False
 
@@ -51,7 +59,9 @@ class StreamListener(tweepy.StreamListener):
         return hashtags
 
     def get_tweet_dict(self, t):
-        '''extract information from the tweet'''
+        """
+        extract information from the tweet
+        """
         if 'extended_tweet' in t:
             text = t['extended_tweet']['full_text']
         else:
@@ -72,8 +82,10 @@ class StreamListener(tweepy.StreamListener):
                  'interesting': 0}
         return tweet
 
-    def on_data(self, data):
-        '''collect, filter and parse the tweets from twitter API'''
+    def on_data(self, data): #overriding the method on_data and adding additional variables.
+        """
+        collect, filter and parse the tweets from twitter API
+        """
         t = json.loads(data)
         if t['retweeted'] == False and 'RT' not in t['text'] and t['in_reply_to_status_id'] == None:
             tweet = self.get_tweet_dict(t)
@@ -81,16 +93,23 @@ class StreamListener(tweepy.StreamListener):
             self.counter += 1
             if self.counter == self.limit:
                 return False
+        
 
 
 def get_tweets(limit, callback):
     stream_listener = StreamListener(limit, callback)
     stream = tweepy.Stream(auth=api.auth, listener=stream_listener)
     stream.filter(track=KEYWORDS, languages=['en'])
+    
+    return tweet
 
 def show_text(tweet):
     print(tweet['text'])
+    return tweet['text']
+    
+    
 
 
 if __name__ == '__main__':
-    get_tweets(5, show_text)
+    # auth, api, user = authenticate()
+    tweet = get_tweets(5, show_text)

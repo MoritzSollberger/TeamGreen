@@ -1,0 +1,21 @@
+#docker-compose.yml is a required name for docker compose
+version: '3'
+services:
+    tweets:
+        build: tweepy/
+        ports: # not really needed if nothing is penetraiting the docker
+        - "5555:5555" # one port per system at a time
+        volumes:
+        - ./tweepy/:/app # make /web folder visible to the docker in /code
+        link:
+        - mongodb
+
+    mongodb:
+        image: mongo # searches the web for the standard postgres db
+        port:
+        - "27017:27017" # proxy number for local access : the actual port
+
+    # postgresdb:
+    #     image: postgres # searches the web for the standard postgres db
+    #     port:
+    #     - "5000:5000" # proxy number for local access : the actual port
