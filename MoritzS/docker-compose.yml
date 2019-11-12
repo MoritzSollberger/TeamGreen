@@ -1,0 +1,12 @@
+version: '3'
+services:
+  tweet_streamer:
+    build: twitter_streamer/
+    volumes:
+    - ./twitter_streamer/src/:/src
+    links:
+    - mongodb
+  mongodb:
+    image: mongo
+    ports:
+    - '27017:27017'
