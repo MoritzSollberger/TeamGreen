@@ -6,13 +6,8 @@ import pymongo
 import re
 from credentials import cfg
 
-HOST = 'localhost'
-PORT = '27017'
-CLIENT = pymongo.MongoClient(f'mongodb://{HOST}:{PORT}')
+CLIENT = pymongo.MongoClient('mymongo')
 DB = CLIENT.twitter_data
-# CLIENT = pymongo.MongoClient(host = 'localhost', port = '27018') #if this .py isn't inside the docker-compose
-# pymongo.MongoClient('mymongo') #if you're inside the docker compose, you can just say the database name
-
 
 KEYWORDS = ['Berlin']
 
@@ -23,16 +18,25 @@ def authenticate():
     auth.set_access_token(cfg['ACCESS_TOKEN'], cfg['ACCESS_TOKEN_SECRET'])
     return auth
 
-def write_tweet(tweet_dict):
-
-    df = pd.DataFrame(index = [0], data=tweet_dict)
-    df.to_csv('test.csv', mode='a', header=False)
-
-def load_to_mongo(t):
+def load_to_mongo(tweet):
     """
     twitter_data (DB) -> tweets (collection) -> tweet -> (document)
     """
     DB.tweets.insert(t)
+
+def clean_text(t):
+
+    text = re.sub('https:\/\/[\w.\/]*','',t['text'])
+
+    hashtags = []
+    if 'extended_tweet' in t['original_tweet']:
+        if 'hashtags' in t['original_tweet']['extended_tweet']['entities']
+            for hashtag in t['original_tweet']['extended_tweet']['entities']['hashtags']:
+            hashtags.append(hashtag['text'])
+    else:
+        hashtags = []
+
+    return text, hashtags
 
 
 class TwitterStreamer(StreamListener):
@@ -43,16 +47,18 @@ class TwitterStreamer(StreamListener):
         single tweet as it is intercepted in real-time
         """
         tweet = json.loads(data)
+        text, hastags = clean_text(tweet)
 
-        tweet_dict =    {'created_at':tweet['created_at'],
-                 'id':tweet['id_str'],
-                 'text':re.sub('https:\/\/*?','',tweet['text']),
-                 'username':tweet['user']['screen_name'],
+        tweet_dict =    {'created_at': tweet['created_at'],
+                 'id': tweet['id_str'],
+                 'text': text,
+                 'username': tweet['user']['screen_name'],
                  'followers':tweet['user']['followers_count'],
-                 'user_favorites_count':tweet['user']['favourites_count'],
-                 'retweets':tweet['retweet_count'],
-                 'favorites':tweet['favorite_count'],
-                 'interesting':0}
+                 'user_favorites_count': tweet['user']['favourites_count'],
+                 'retweets': tweet['retweet_count'],
+                 'favorites': tweet['favorite_count'],
+                 'hashtags': hashtags,
+                 'interesting': 0}
 
         # print(tweet_dict)
         # write_tweet(tweet_dict)
