@@ -5,6 +5,14 @@ from tweepy.streaming import StreamListener
 from config import cfg
 import json
 import pandas as pd
+import pymongo
+
+HOST = 'localhost'
+PORT = '27017'
+#CLIENT = pymongo.MongoClient(f'mongodb://{HOST}:{PORT}')
+CLIENT = pymongo.MongoClient('mongodb')
+DB = CLIENT.twitter_data
+
 
 def authenticate():
     """
@@ -18,9 +26,16 @@ def authenticate():
 
 def write_tweet(tweet_dict):
     df_old = pd.read_csv('test.csv')
-    df = pd.DataFrame(tweet_dict, index = [0,1])
+    df = pd.DataFrame(tweet_dict, index=[0, 1])
     df.to_csv('test.csv')
 
+
+def load_into_mongo(tweet_dict):
+    """
+    twitter_data (DB) ---> tweets (collection) ---> tweet_dict (documents)
+    """
+    DB.tweets.insert(tweet_dict)
+    print(f"successfully loaded tweet by {tweet_dict['user']} into Mongo!")
 
 
 class TwitterStreamer(StreamListener):
@@ -32,14 +47,14 @@ class TwitterStreamer(StreamListener):
         """
         tweet = json.loads(data)
 
-
         tweet_dict = {
             'user': tweet['user']['screen_name'],
-            'text':tweet['text']
+            'text': tweet['text'],
+            'original tweet': tweet
         }
-        print(tweet_dict)
-        print('\n\n')
-        write_tweet(tweet_dict)
+
+        # write_tweet(tweet_dict)
+        load_into_mongo(tweet_dict)
 
     def on_error(self, status):
 
@@ -47,6 +62,7 @@ class TwitterStreamer(StreamListener):
 
             print(status)
             return False
+
 
 # if executed directly, call this. Otherwise no.
 if __name__ == '__main__':

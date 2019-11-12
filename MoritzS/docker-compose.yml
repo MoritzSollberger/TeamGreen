@@ -1,11 +1,12 @@
 version: '3'
 services:
-  tweet_collector:
-    build: tweet_collector/
+  tweet_streamer:
+    build: twitter_streamer/
     volumes:
-    - tweet_collector/:/code
+    - ./twitter_streamer/src/:/src
     links:
     - mongodb
   mongodb:
     image: mongo
-    ports: "3456:27107"
+    ports:
+    - '27017:27017'
