@@ -7,8 +7,8 @@ import re
 from credentials import cfg
 
 HOST = 'localhost'
-PORT = '27018'
-pymongo.MongoClient(f'mongodb://{HOST}:{PORT}')
+PORT = '27017'
+CLIENT = pymongo.MongoClient(f'mongodb://{HOST}:{PORT}')
 DB = CLIENT.twitter_data
 # CLIENT = pymongo.MongoClient(host = 'localhost', port = '27018') #if this .py isn't inside the docker-compose
 # pymongo.MongoClient('mymongo') #if you're inside the docker compose, you can just say the database name
@@ -28,7 +28,7 @@ def write_tweet(tweet_dict):
     df = pd.DataFrame(index = [0], data=tweet_dict)
     df.to_csv('test.csv', mode='a', header=False)
 
-def load_to_mongo(tweet):
+def load_to_mongo(t):
     """
     twitter_data (DB) -> tweets (collection) -> tweet -> (document)
     """
@@ -44,15 +44,15 @@ class TwitterStreamer(StreamListener):
         """
         tweet = json.loads(data)
 
-        tweet_dict =    {'created_at': tweet['created_at'],
-                 'id': tweet['id_str'],
-                 'text': re.sub('https:\/\/*?','',tweet['text'],
-                 'username': tweet['user']['screen_name'],
+        tweet_dict =    {'created_at':tweet['created_at'],
+                 'id':tweet['id_str'],
+                 'text':re.sub('https:\/\/*?','',tweet['text']),
+                 'username':tweet['user']['screen_name'],
                  'followers':tweet['user']['followers_count'],
-                 'user_favorites_count': tweet['user']['favourites_count'],
-                 'retweets': tweet['retweet_count'],
-                 'favorites': tweet['favorite_count'],
-                 'interesting': 0}
+                 'user_favorites_count':tweet['user']['favourites_count'],
+                 'retweets':tweet['retweet_count'],
+                 'favorites':tweet['favorite_count'],
+                 'interesting':0}
 
         # print(tweet_dict)
         # write_tweet(tweet_dict)
