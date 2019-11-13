@@ -13,28 +13,41 @@ services:
     - '27017:27017'
 
   etl:
-    image: puckel/docker-airflow
+    build: etl/
     volumes:
-    # - ./etl/src/:${AIRFLOW_HOME}/dags
     - ./etl/src/:/usr/local/airflow/dags
-    ports:
-    - '8080:8080'
+    restart: always
+    depends_on:
+        - postgres
     environment:
-      - d
+        - LOAD_EX=n
+        - EXECUTOR=Local
+    ports:
+        - "8080:8080"
+    command: webserver
+    # healthcheck:
+    #     test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+    #     interval: 30s
+    #     timeout: 30s
+    #     retries: 3
 
   postgres:
-    image: postgres
+    build: postgres/
     ports:
     - '5430:5432'
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
 
-  flask:
-    build: flask/
-    ports:
-    - '80:80'
-    volumes:
-    - ./flask/src/:/src
-    links:
-    - mongodb
+  # flask:
+  #   build: flask/
+  #   ports:
+  #   - '80:80'
+  #   volumes:
+  #   - ./flask/src/:/src
+  #   links:
+  #   - mongodb
 
   # metabase:
   #   image: metabase/metabase
