@@ -6,7 +6,35 @@ services:
     - ./twitter_streamer/src/:/src
     links:
     - mongodb
+
   mongodb:
     image: mongo
     ports:
     - '27017:27017'
+
+  etl:
+    image: puckel/docker-airflow
+    volumes:
+    # - ./etl/src/:${AIRFLOW_HOME}/dags
+    - ./etl/src/:/usr/local/airflow/dags
+    ports:
+    - '8080:8080'
+
+  postgres:
+    image: postgres
+    ports:
+    - '5430:5432'
+
+  flask:
+    build: flask/
+    ports:
+    - '80:80'
+    volumes:
+    - ./flask/src/:/src
+    links:
+    - mongodb
+
+  # metabase:
+  #   image: metabase/metabase
+  #   ports:
+  #   - '3000:3000'
