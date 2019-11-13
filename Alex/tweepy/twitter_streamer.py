@@ -29,12 +29,20 @@ def clean_text(t):
     text = re.sub('https:\/\/[\w.\/]*','',t['text'])
 
     hashtags = []
-    if 'extended_tweet' in t['original_tweet']:
-        if 'hashtags' in t['original_tweet']['extended_tweet']['entities']
-            for hashtag in t['original_tweet']['extended_tweet']['entities']['hashtags']:
+    try:
+        for hashtag in t['original tweet']['extended_tweet']['entities']['hashtags']:
             hashtags.append(hashtag['text'])
-    else:
+    except:
         hashtags = []
+
+    #original method!
+
+    # if 'extended_tweet' in t['original tweet']:
+    #     if 'hashtags' in t['original tweet']['extended_tweet']['entities']:
+    #         for hashtag in t['original tweet']['extended_tweet']['entities']['hashtags']:
+    #             hashtags.append(hashtag['text'])
+    # else:
+    #     hashtags = []
 
     return text, hashtags
 
@@ -47,7 +55,7 @@ class TwitterStreamer(StreamListener):
         single tweet as it is intercepted in real-time
         """
         tweet = json.loads(data)
-        text, hastags = clean_text(tweet)
+        text, hashtags = clean_text(tweet)
 
         tweet_dict =    {'created_at': tweet['created_at'],
                  'id': tweet['id_str'],
