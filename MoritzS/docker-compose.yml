@@ -9,37 +9,28 @@ services:
 
   mongodb:
     image: mongo
+    command: --serviceExecutor adaptive
     ports:
     - '27017:27017'
-
-  etl:
-    build: etl/
-    volumes:
-    - ./etl/src/:/usr/local/airflow/dags
-    restart: always
-    depends_on:
-        - postgres
-    environment:
-        - LOAD_EX=n
-        - EXECUTOR=Local
-    ports:
-        - "8080:8080"
-    command: webserver
-    # healthcheck:
-    #     test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
-    #     interval: 30s
-    #     timeout: 30s
-    #     retries: 3
 
   postgres:
     build: postgres/
     ports:
-    - '5430:5432'
+    - '5433:5432'
     environment:
-      - POSTGRES_USER=airflow
-      - POSTGRES_PASSWORD=airflow
-      - POSTGRES_DB=airflow
+      # - POSTGRES_USER=docker_user
+      # - POSTGRES_PASSWORD=pw
+      - POSTGRES_DB=twitter
 
+  etl:
+    build: etl/
+    volumes:
+    - ./etl/src/:/src
+    depends_on:
+        - postgres
+    ports:
+        - "8080:8080"
+          
   # flask:
   #   build: flask/
   #   ports:
@@ -53,3 +44,22 @@ services:
   #   image: metabase/metabase
   #   ports:
   #   - '3000:3000'
+
+  # etl:
+  #   build: etl/
+  #   volumes:
+  #   - ./etl/src/:/usr/local/airflow/dags
+  #   restart: always
+  #   depends_on:
+  #       - postgres
+  #   environment:
+  #       - LOAD_EX=n
+  #       - EXECUTOR=Local
+  #   ports:
+  #       - "8080:8080"
+  #   command: webserver
+    # healthcheck:
+    #     test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+    #     interval: 30s
+    #     timeout: 30s
+    #     retries: 3
