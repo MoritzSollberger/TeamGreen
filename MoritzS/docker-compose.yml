@@ -2,6 +2,7 @@ version: '3'
 services:
   tweet_streamer:
     build: twitter_streamer/
+    restart: always
     volumes:
     - ./twitter_streamer/src/:/src
     links:
@@ -9,12 +10,14 @@ services:
 
   mongodb:
     image: mongo
+    restart: always
     command: --serviceExecutor adaptive
     ports:
     - '27017:27017'
 
   postgres:
     build: postgres/
+    restart: always
     ports:
     - '5433:5432'
     environment:
@@ -24,13 +27,33 @@ services:
 
   etl:
     build: etl/
+    restart: always
     volumes:
     - ./etl/src/:/src
     depends_on:
         - postgres
     ports:
         - "8080:8080"
-          
+
+  metabase:
+    image: metabase/metabase
+    restart: always
+    ports:
+      - 3000:3000
+    # volumes:
+    #   # declare your mount volume /host/dir:/container/dir
+    #   - /home/app/metabase-data:/metabase-data
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: twitter
+      MB_DB_PORT: 5432
+      MB_DB_USER: postgres
+      MB_DB_PASS: postgres
+      MB_DB_HOST: postgres
+    depends_on:
+      - postgres
+    links:
+      - postgres
   # flask:
   #   build: flask/
   #   ports:

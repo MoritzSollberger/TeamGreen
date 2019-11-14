@@ -7,6 +7,8 @@ from pymongo import MongoClient
 import pymongo
 import logging
 import sys
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+
 
 # levels: DEBUG < INFO < WARNING < ERROR < CRITICAL
 logging.basicConfig(filename='debug.log',
@@ -14,21 +16,31 @@ logging.basicConfig(filename='debug.log',
 
 # 1. Extract data from DB 1
 
-def extract_mongo():
+def extract_mongo(iteration):
+    iteration = iteration
     client = MongoClient('mongodb')
     db = client['twitter_data']
     collection = db.tweets
-    df = pd.DataFrame(list(collection.find().limit(5)))
+    df = pd.DataFrame(list(collection.find().skip(5*iteration).limit(5)))
     logging.debug(str(df.head(1)))
     return df
 
 # 2. Transform it
+def sentiment_analysis(df):
+    analyzer = SentimentIntensityAnalyzer()
+    polarity = []
+    for tweet in df['text'].astype(str):
+        polar = analyzer.polarity_scores(tweet)
+        polarity.append(polar['compound'])
+    return polarity
+
 def transform_data(df):
     # df['length'] = df['name'].apply(len)
-    df['id'] = df['_id'].astype(str)
+    #df['id'] = df['_id'].astype(str)
     del df['_id']
-    del df['original tweet']
+    del df['entities']
     df.set_index('id', inplace=True)
+    df['sentiment'] = sentiment_analysis(df)
     logging.debug(str(df))  # logging
     return df
 
@@ -48,6 +60,8 @@ def load_sql(df):
     #print(df.shape)
 
 # functional programming
+iteration = 0
 while True:
-    load_sql(transform_data(extract_mongo()))
+    load_sql(transform_data(extract_mongo(iteration)))
+    iteration += 1
     time.sleep(6)
