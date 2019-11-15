@@ -1,4 +1,4 @@
 flask
 pandas
-tweepy
-pymongo
+sqlalchemy
+psycopg2-binary

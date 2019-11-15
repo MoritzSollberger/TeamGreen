@@ -54,11 +54,12 @@ class TwitterStreamer(StreamListener):
             'followers_count': tweet['user']['followers_count'],
             'date': tweet['created_at'],
             'location': tweet['user']['location'],
-            'quote_count': tweet['quote_count'],
-            'reply_count': tweet['reply_count'],
-            'retweet_count': tweet['retweet_count'],
-            'favorite_count': tweet['favorite_count'],
-            'entities': tweet['entities']
+            # 'quote_count': tweet['quote_count'],
+            # 'reply_count': tweet['reply_count'],
+            # 'retweet_count': tweet['retweet_count'],
+            # 'favorite_count': tweet['favorite_count'],
+            'entities': tweet['entities'],
+            'sentimented':0
         }
 
         # write_tweet(tweet_dict)
@@ -90,4 +91,4 @@ if __name__ == '__main__':
     # start the stream
     stream = Stream(auth, streamer)
 
-    stream.filter(track=['berlin'], languages=['en'])
+    stream.filter(track=['joker'], languages=['en'])

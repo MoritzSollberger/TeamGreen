@@ -21,7 +21,16 @@ def extract_mongo(iteration):
     client = MongoClient('mongodb')
     db = client['twitter_data']
     collection = db.tweets
-    df = pd.DataFrame(list(collection.find().skip(5*iteration).limit(5)))
+    df = pd.DataFrame(list(collection.find({'sentimented':0})))
+    #df = pd.DataFrame(list(collection.find().skip(5*iteration).limit(5)))
+    
+    for index in df.index:
+        row = df.loc[index]
+        db.tweets.update_one(
+            {'_id': row['_id']},
+            {'$set': {'sentimented': 1}},
+            upsert=False)
+
     logging.debug(str(df.head(1)))
     return df
 
@@ -37,10 +46,11 @@ def sentiment_analysis(df):
 def transform_data(df):
     # df['length'] = df['name'].apply(len)
     #df['id'] = df['_id'].astype(str)
-    del df['_id']
     del df['entities']
     df.set_index('id', inplace=True)
     df['sentiment'] = sentiment_analysis(df)
+
+    del df['_id']
     logging.debug(str(df))  # logging
     return df
 

@@ -54,14 +54,15 @@ services:
       - postgres
     links:
       - postgres
-  # flask:
-  #   build: flask/
-  #   ports:
-  #   - '80:80'
-  #   volumes:
-  #   - ./flask/src/:/src
-  #   links:
-  #   - mongodb
+
+  flask:
+    build: flask/
+    ports:
+    - '80:80'
+    volumes:
+    - ./flask/src/:/src
+    links:
+    - mongodb
 
   # metabase:
   #   image: metabase/metabase
