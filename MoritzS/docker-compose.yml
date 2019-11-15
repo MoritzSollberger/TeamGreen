@@ -1,12 +1,93 @@
 version: '3'
 services:
   tweet_streamer:
+<<<<<<< HEAD
     build: twitter/
+=======
+    build: twitter_streamer/
+    restart: always
+>>>>>>> 9a025277580f7df445ea82c0b1adeba49af47a95
     volumes:
     - ./twitter/src/:/src
     links:
     - mongodb
+
   mongodb:
     image: mongo
+    restart: always
+    command: --serviceExecutor adaptive
     ports:
     - '27017:27017'
+
+  postgres:
+    build: postgres/
+    restart: always
+    ports:
+    - '5433:5432'
+    environment:
+      # - POSTGRES_USER=docker_user
+      # - POSTGRES_PASSWORD=pw
+      - POSTGRES_DB=twitter
+
+  etl:
+    build: etl/
+    restart: always
+    volumes:
+    - ./etl/src/:/src
+    depends_on:
+        - postgres
+    ports:
+        - "8080:8080"
+
+  metabase:
+    image: metabase/metabase
+    restart: always
+    ports:
+      - 3000:3000
+    # volumes:
+    #   # declare your mount volume /host/dir:/container/dir
+    #   - /home/app/metabase-data:/metabase-data
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: twitter
+      MB_DB_PORT: 5432
+      MB_DB_USER: postgres
+      MB_DB_PASS: postgres
+      MB_DB_HOST: postgres
+    depends_on:
+      - postgres
+    links:
+      - postgres
+
+  flask:
+    build: flask/
+    ports:
+    - '80:80'
+    volumes:
+    - ./flask/src/:/src
+    links:
+    - mongodb
+
+  # metabase:
+  #   image: metabase/metabase
+  #   ports:
+  #   - '3000:3000'
+
+  # etl:
+  #   build: etl/
+  #   volumes:
+  #   - ./etl/src/:/usr/local/airflow/dags
+  #   restart: always
+  #   depends_on:
+  #       - postgres
+  #   environment:
+  #       - LOAD_EX=n
+  #       - EXECUTOR=Local
+  #   ports:
+  #       - "8080:8080"
+  #   command: webserver
+    # healthcheck:
+    #     test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+    #     interval: 30s
+    #     timeout: 30s
+    #     retries: 3

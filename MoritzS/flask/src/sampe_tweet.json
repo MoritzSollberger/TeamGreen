@@ -1,0 +1,307 @@
+{
+  "_id": ObjectId("5dcacbab8fdd7d8653d80312"),
+  "user": "rrrrrrrrraydon",
+  "text": "RT @beth_monje: Critical Emergency 🚨 #A439997 #GermanShepherd Berlin this sweet boy need to be rescued immediately Berlin had been neutered…",
+  "original tweet": {
+    "created_at": "Tue Nov 12 15:11:34 +0000 2019",
+    "id": NumberLong("1194271522820485121"),
+    "id_str": "1194271522820485121",
+    "text": "RT @beth_monje: Critical Emergency 🚨 #A439997 #GermanShepherd Berlin this sweet boy need to be rescued immediately Berlin had been neutered…",
+    "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+    "truncated": false,
+    "in_reply_to_status_id": null,
+    "in_reply_to_status_id_str": null,
+    "in_reply_to_user_id": null,
+    "in_reply_to_user_id_str": null,
+    "in_reply_to_screen_name": null,
+    "user": {
+      "id": 448235525,
+      "id_str": "448235525",
+      "name": "christian litherland",
+      "screen_name": "rrrrrrrrraydon",
+      "location": "upper midhope",
+      "url": null,
+      "description": "swfc up the owls animals come first big Donald Trump supporter 🦉🏴󠁧󠁢󠁥󠁮󠁧󠁿🇺🇸",
+      "translator_type": "none",
+      "protected": false,
+      "verified": false,
+      "followers_count": 562,
+      "friends_count": 760,
+      "listed_count": 12,
+      "favourites_count": 1022,
+      "statuses_count": 41514,
+      "created_at": "Tue Dec 27 19:35:59 +0000 2011",
+      "utc_offset": null,
+      "time_zone": null,
+      "geo_enabled": true,
+      "lang": null,
+      "contributors_enabled": false,
+      "is_translator": false,
+      "profile_background_color": "C0DEED",
+      "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+      "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+      "profile_background_tile": false,
+      "profile_link_color": "1DA1F2",
+      "profile_sidebar_border_color": "C0DEED",
+      "profile_sidebar_fill_color": "DDEEF6",
+      "profile_text_color": "333333",
+      "profile_use_background_image": true,
+      "profile_image_url": "http://pbs.twimg.com/profile_images/2647555064/322c6c0014b08b9d21ba079693744883_normal.jpeg",
+      "profile_image_url_https": "https://pbs.twimg.com/profile_images/2647555064/322c6c0014b08b9d21ba079693744883_normal.jpeg",
+      "profile_banner_url": "https://pbs.twimg.com/profile_banners/448235525/1532808527",
+      "default_profile": true,
+      "default_profile_image": false,
+      "following": null,
+      "follow_request_sent": null,
+      "notifications": null
+    },
+    "geo": null,
+    "coordinates": null,
+    "place": null,
+    "contributors": null,
+    "retweeted_status": {
+      "created_at": "Mon Nov 11 20:46:55 +0000 2019",
+      "id": NumberLong("1193993528675721216"),
+      "id_str": "1193993528675721216",
+      "text": "Critical Emergency 🚨 #A439997 #GermanShepherd Berlin this sweet boy need to be rescued immediately Berlin had been… https://t.co/EeoKVjQ8je",
+      "display_text_range": [0, 140],
+      "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+      "truncated": true,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": NumberLong("889286757459611648"),
+        "id_str": "889286757459611648",
+        "name": "Beth Monje",
+        "screen_name": "beth_monje",
+        "location": "California, USA",
+        "url": null,
+        "description": null,
+        "translator_type": "none",
+        "protected": false,
+        "verified": false,
+        "followers_count": 1056,
+        "friends_count": 1000,
+        "listed_count": 0,
+        "favourites_count": 25270,
+        "statuses_count": 17818,
+        "created_at": "Mon Jul 24 00:50:59 +0000 2017",
+        "utc_offset": null,
+        "time_zone": null,
+        "geo_enabled": true,
+        "lang": null,
+        "contributors_enabled": false,
+        "is_translator": false,
+        "profile_background_color": "F5F8FA",
+        "profile_background_image_url": "",
+        "profile_background_image_url_https": "",
+        "profile_background_tile": false,
+        "profile_link_color": "1DA1F2",
+        "profile_sidebar_border_color": "C0DEED",
+        "profile_sidebar_fill_color": "DDEEF6",
+        "profile_text_color": "333333",
+        "profile_use_background_image": true,
+        "profile_image_url": "http://pbs.twimg.com/profile_images/1111864725002846210/aSduQyYc_normal.jpg",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1111864725002846210/aSduQyYc_normal.jpg",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/889286757459611648/1525080039",
+        "default_profile": true,
+        "default_profile_image": false,
+        "following": null,
+        "follow_request_sent": null,
+        "notifications": null
+      },
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "is_quote_status": false,
+      "extended_tweet": {
+        "full_text": "Critical Emergency 🚨 #A439997 #GermanShepherd Berlin this sweet boy need to be rescued immediately Berlin had been neutered plus 3 other surgery’s and two lumps removed and is now having a hard time getting up possibly Due to having 3 surgeries at once . Location listed below 👇 https://t.co/noXR2ao3lF",
+        "display_text_range": [0, 278],
+        "entities": {
+          "hashtags": [{
+            "text": "A439997",
+            "indices": [21, 29]
+          }, {
+            "text": "GermanShepherd",
+            "indices": [30, 45]
+          }],
+          "urls": [],
+          "user_mentions": [],
+          "symbols": [],
+          "media": [{
+            "id": NumberLong("1193993404306247682"),
+            "id_str": "1193993404306247682",
+            "indices": [279, 302],
+            "additional_media_info": {
+              "monetizable": false
+            },
+            "media_url": "http://pbs.twimg.com/ext_tw_video_thumb/1193993404306247682/pu/img/SKKeofuEy-70ZJrK.jpg",
+            "media_url_https": "https://pbs.twimg.com/ext_tw_video_thumb/1193993404306247682/pu/img/SKKeofuEy-70ZJrK.jpg",
+            "url": "https://t.co/noXR2ao3lF",
+            "display_url": "pic.twitter.com/noXR2ao3lF",
+            "expanded_url": "https://twitter.com/beth_monje/status/1193993528675721216/video/1",
+            "type": "video",
+            "video_info": {
+              "aspect_ratio": [9, 16],
+              "duration_millis": 22020,
+              "variants": [{
+                "bitrate": 2176000,
+                "content_type": "video/mp4",
+                "url": "https://video.twimg.com/ext_tw_video/1193993404306247682/pu/vid/720x1280/d5Avr-tn57aGVCWi.mp4?tag=10"
+              }, {
+                "content_type": "application/x-mpegURL",
+                "url": "https://video.twimg.com/ext_tw_video/1193993404306247682/pu/pl/A7CsfKTIvHsOk-Xz.m3u8?tag=10"
+              }, {
+                "bitrate": 632000,
+                "content_type": "video/mp4",
+                "url": "https://video.twimg.com/ext_tw_video/1193993404306247682/pu/vid/320x568/XWgz-5KNZYs8tGzE.mp4?tag=10"
+              }, {
+                "bitrate": 832000,
+                "content_type": "video/mp4",
+                "url": "https://video.twimg.com/ext_tw_video/1193993404306247682/pu/vid/360x640/HYikzmwNaj-YfHk4.mp4?tag=10"
+              }]
+            },
+            "sizes": {
+              "thumb": {
+                "w": 150,
+                "h": 150,
+                "resize": "crop"
+              },
+              "small": {
+                "w": 383,
+                "h": 680,
+                "resize": "fit"
+              },
+              "large": {
+                "w": 720,
+                "h": 1280,
+                "resize": "fit"
+              },
+              "medium": {
+                "w": 675,
+                "h": 1200,
+                "resize": "fit"
+              }
+            }
+          }]
+        },
+        "extended_entities": {
+          "media": [{
+            "id": NumberLong("1193993404306247682"),
+            "id_str": "1193993404306247682",
+            "indices": [279, 302],
+            "additional_media_info": {
+              "monetizable": false
+            },
+            "media_url": "http://pbs.twimg.com/ext_tw_video_thumb/1193993404306247682/pu/img/SKKeofuEy-70ZJrK.jpg",
+            "media_url_https": "https://pbs.twimg.com/ext_tw_video_thumb/1193993404306247682/pu/img/SKKeofuEy-70ZJrK.jpg",
+            "url": "https://t.co/noXR2ao3lF",
+            "display_url": "pic.twitter.com/noXR2ao3lF",
+            "expanded_url": "https://twitter.com/beth_monje/status/1193993528675721216/video/1",
+            "type": "video",
+            "video_info": {
+              "aspect_ratio": [9, 16],
+              "duration_millis": 22020,
+              "variants": [{
+                "bitrate": 2176000,
+                "content_type": "video/mp4",
+                "url": "https://video.twimg.com/ext_tw_video/1193993404306247682/pu/vid/720x1280/d5Avr-tn57aGVCWi.mp4?tag=10"
+              }, {
+                "content_type": "application/x-mpegURL",
+                "url": "https://video.twimg.com/ext_tw_video/1193993404306247682/pu/pl/A7CsfKTIvHsOk-Xz.m3u8?tag=10"
+              }, {
+                "bitrate": 632000,
+                "content_type": "video/mp4",
+                "url": "https://video.twimg.com/ext_tw_video/1193993404306247682/pu/vid/320x568/XWgz-5KNZYs8tGzE.mp4?tag=10"
+              }, {
+                "bitrate": 832000,
+                "content_type": "video/mp4",
+                "url": "https://video.twimg.com/ext_tw_video/1193993404306247682/pu/vid/360x640/HYikzmwNaj-YfHk4.mp4?tag=10"
+              }]
+            },
+            "sizes": {
+              "thumb": {
+                "w": 150,
+                "h": 150,
+                "resize": "crop"
+              },
+              "small": {
+                "w": 383,
+                "h": 680,
+                "resize": "fit"
+              },
+              "large": {
+                "w": 720,
+                "h": 1280,
+                "resize": "fit"
+              },
+              "medium": {
+                "w": 675,
+                "h": 1200,
+                "resize": "fit"
+              }
+            }
+          }]
+        }
+      },
+      "quote_count": 59,
+      "reply_count": 101,
+      "retweet_count": 722,
+      "favorite_count": 570,
+      "entities": {
+        "hashtags": [{
+          "text": "A439997",
+          "indices": [21, 29]
+        }, {
+          "text": "GermanShepherd",
+          "indices": [30, 45]
+        }],
+        "urls": [{
+          "url": "https://t.co/EeoKVjQ8je",
+          "expanded_url": "https://twitter.com/i/web/status/1193993528675721216",
+          "display_url": "twitter.com/i/web/status/1…",
+          "indices": [116, 139]
+        }],
+        "user_mentions": [],
+        "symbols": []
+      },
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "filter_level": "low",
+      "lang": "en"
+    },
+    "is_quote_status": false,
+    "quote_count": 0,
+    "reply_count": 0,
+    "retweet_count": 0,
+    "favorite_count": 0,
+    "entities": {
+      "hashtags": [{
+        "text": "A439997",
+        "indices": [37, 45]
+      }, {
+        "text": "GermanShepherd",
+        "indices": [46, 61]
+      }],
+      "urls": [],
+      "user_mentions": [{
+        "screen_name": "beth_monje",
+        "name": "Beth Monje",
+        "id": NumberLong("889286757459611648"),
+        "id_str": "889286757459611648",
+        "indices": [3, 14]
+      }],
+      "symbols": []
+    },
+    "favorited": false,
+    "retweeted": false,
+    "filter_level": "low",
+    "lang": "en",
+    "timestamp_ms": "1573571494189"
+  }
+}

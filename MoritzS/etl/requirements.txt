@@ -1,4 +1,6 @@
-flask
 pandas
+pymongo
 sqlalchemy
 psycopg2-binary
+requests
+vaderSentiment
