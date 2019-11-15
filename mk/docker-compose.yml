@@ -1,11 +1,34 @@
 version: '3'
 services:
-  tweet_collector:
-    build: tweet_collector/
+
+  01_tweet_streamer:
+    build: 01_twitter/
     volumes:
-    - ./twitter/src/:/src
-    links:
-    - mongodb
+    - ./01_twitter/src/:/src
+    # links:
+    # - 02_mongodb
+
   mongodb:
     image: mongo
-    ports: '27017:27017'
+    ports:
+    - '27019:27017'
+
+  03_etl:
+    build: 03_etl/
+    # image: puckel/docker-airflow
+    volumes:
+    - ./03_etl/src/:/src
+    ports:
+    - '8080:8080'
+
+  04_sql:
+    image: postgres:12.0
+    # build: sql/
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
+    - POSTGRES_DB=twitter
+    volumes:
+    - ./04_sql/:/src
+    ports:
+    - '5433:5432'
