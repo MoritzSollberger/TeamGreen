@@ -12,9 +12,6 @@ import pprint
 import re
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-# 5 levels: DEBUG < INFO < WARNING < ERROR < CRITICAL
-# logging.basicConfig(filename='debug.log', level = logging.INFO) # filename = ’debug.log'
-
 #%%
 
 # 1. extract data from DB 1
@@ -24,21 +21,16 @@ DB = 'twitter_data'
 COLLECTION = 'tweets' #table
 
 def extract_data():
+    """
+    function that pulls the tweets from the mongodb into DataFrame
+    """
     client = MongoClient(HOST, PORT)
     collection = client[DB][COLLECTION]
     df = pd.DataFrame(collection.find().limit(10))
     return df
-    # texts = []
-        # for tweet in collection.find().limit(10):
-    #     texts.append(tweet['text'])
-    # return df
-    # return texts
 
-data = extract_data()
-data
 #%%
-
-
+# clean the data (for now just kick out links)
 def clean_data(df):
     """
     function used to create new column and clean (e.g. 're-tweet' - information,
@@ -46,72 +38,54 @@ def clean_data(df):
     """
     cleaned = []
     for row,i in zip(df['text'],df.index):
-        if ':' in row:
-            row = row.split(':')[1]
-        a = re.sub('[\.@]', '', row)
-        cleaned.append(a)
+        # if ':' in row:
+        #     row = row.split(':')[1]
+        text = re.sub('https:[\w.\/]*','',row)
+        # a = re.sub(r'[\.@]', '', row)
+        cleaned.append(text)
     df['clean_text'] = pd.Series(cleaned)
-
     return df
 
-data1 = clean_data(data)
-data1['text'][0]
-data1['clean_text'][0]
 #%%
-# sentiment analysis
+# transform the data (-> sentiment anlysis)
+def sentiment_analysis(df):
+    """
+    function used to determine the sentiment of the tweets
+    """
+    analyzer = SentimentIntensityAnalyzer()
+    polarity = []
+    for tweet in df['clean_text'].astype(str):
+        sentiment = analyzer.polarity_scores(tweet)
+        polarity.append(sentiment['compound'])
+    df['sentiment'] = pd.Series(polarity)
+    return df
+#%%
+# call the function: functional style
 
-analyzer = SentimentIntensityAnalyzer()
-
-for text in clean_texts:
-    print(analyzer.polarity_scores(text))
+data_final = sentiment_analysis(clean_data(extract_data()))
+data_final
 
 #%%
+# DataFrame to SQL-table
+db = 'twitter'
+table = 'tweets'
 user = 'postgres'
-db = 'twitter '
-
+password = 'postgres'
+host = '04_sql'
+port = '5432'
 
 def load_sql(df):
+    """
+    pushes the DataFrame to the postgres container into a table
+    in the twitter database
+    """
     engine = create_engine(f'postgres://{user}:{user}@{host}:{port}/{db}')
     df = df.to_sql(table, engine, if_exists='append')
     logging.debug(str(df))  # logging
-    return df
+    # return df
     #print(df.shape)
 
-
-
-
-
-
-
-# 2. transform it
-def transform_data(df):
-    df['length'] = df['user'].apply(len)
-    df.set_index('name', inplace=True)
-    logging.debug(str(df))
-    print(df)
-    return df
-
 #%%
-# 3. load it to DB2
+# call all function together
 
-def load_data(df):
-    json = df.to_dict()
-    json['timestamp'] = time.asctime()
-    print(json)
-    mongo_conn = pymongo.MongoClient("0.0.0.0:27017")
-    mongo_conn.db.collections.names.insert(json)
-    # to start up mongo in a docker container:
-    # docker run -it -d -p 27017:27017 mongo
-
-#%%
-# call the functions
-
-df = extract_data()
-df = transform_data(df)
-load_data(df)
-
-# functional style
-# load_data(transform_data(extract_data()))
-
-# in Airflow this would look like this:
-# extract_data >> transform_data >> load_data
+load_sql(data_final)
